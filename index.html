@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pula Market — Botswana Economic Intelligence Hub</title>
+    <meta name="description" content="Real-time Botswana economic data, market intelligence, and SME tracking powered by SAGEWORKS AI">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-icon">🇧🇼</span>
+                <h1>PULA MARKET</h1>
+                <span class="brand-subtitle">SAGEWORKS AI</span>
+            </div>
+            <div class="nav-links">
+                <a href="#feed" class="nav-link active">Feed</a>
+                <a href="#market" class="nav-link">Market Data</a>
+                <a href="#sme" class="nav-link">SME Tracker</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Article Feed Section -->
+        <section id="feed" class="content-section active">
+            <div class="section-header">
+                <h2>Economic Intelligence Feed</h2>
+                <p class="section-subtitle">Real-time Botswana market insights and analysis</p>
+            </div>
+            <div id="article-feed" class="article-grid">
+                <div class="loading-spinner">Loading articles...</div>
+            </div>
+        </section>
+
+        <!-- Market Data Section -->
+        <section id="market" class="content-section">
+            <div class="section-header">
+                <h2>Market Data</h2>
+                <p class="section-subtitle">Live economic indicators and market metrics</p>
+            </div>
+            <div class="market-dashboard">
+                <div class="metric-card">
+                    <div class="metric-header">BWP/USD</div>
+                    <div id="bwp-usd" class="metric-value">Loading...</div>
+                    <div class="metric-change">Fetching live data</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-header">Inflation Rate</div>
+                    <div id="inflation" class="metric-value">Loading...</div>
+                    <div class="metric-change">Fetching live data</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-header">GDP Growth</div>
+                    <div id="gdp" class="metric-value">Loading...</div>
+                    <div class="metric-change">Fetching live data</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-header">Business Confidence</div>
+                    <div id="confidence" class="metric-value">Loading...</div>
+                    <div class="metric-change">Fetching live data</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SME Tracker Section -->
+        <section id="sme" class="content-section">
+            <div class="section-header">
+                <h2>SME Tracker</h2>
+                <p class="section-subtitle">Botswana small business landscape monitoring</p>
+            </div>
+            <div id="sme-dashboard" class="sme-grid">
+                <div class="loading-spinner">Loading SME data...</div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 SAGEWORKS AI — Botswana Economic Intelligence Hub</p>
+        <p class="footer-disclaimer">Data sourced from Bank of Botswana, Statistics Botswana, and verified market sources</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/supabase.js"></script>
+    <script src="assets/js/feed.js"></script>
+    <script src="assets/js/market.js"></script>
+    <script src="assets/js/sme.js"></script>
+</body>
+</html>
