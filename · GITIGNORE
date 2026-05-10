@@ -1,0 +1,32 @@
+# Environment and secrets
+.env
+.env.local
+.env.production
+config.local.js
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node (if used later)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build output (if added later)
+dist/
+build/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
