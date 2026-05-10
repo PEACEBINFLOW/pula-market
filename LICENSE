@@ -1,21 +1,132 @@
-MIT License
 
-Copyright (c) 2026 Peace Thabiwa
+### FILE 4: `supabase-schema.sql`
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+```sql
+-- ═══════════════════════════════════════════════════
+-- PULA MARKET · SAGEWORKS AI
+-- Supabase Database Schema
+-- Run this in SQL Editor:
+-- https://sjladuwbjctoxeuxcfmg.supabase.co
+-- ═══════════════════════════════════════════════════
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+-- Articles / Intelligence Feed
+CREATE TABLE IF NOT EXISTS articles (
+  id          UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  created_at  TIMESTAMPTZ DEFAULT NOW(),
+  updated_at  TIMESTAMPTZ DEFAULT NOW(),
+  title       TEXT NOT NULL,
+  excerpt     TEXT,
+  body        TEXT,
+  tag         TEXT,
+  sector      TEXT,
+  source_name TEXT NOT NULL,
+  source_url  TEXT,
+  source_date DATE,
+  featured    BOOLEAN DEFAULT FALSE,
+  published   BOOLEAN DEFAULT TRUE
+);
+ALTER TABLE articles ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public read articles" ON articles FOR SELECT USING (published = TRUE);
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+-- Market Data
+CREATE TABLE IF NOT EXISTS market_data (
+  id           UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  created_at   TIMESTAMPTZ DEFAULT NOW(),
+  ticker       TEXT NOT NULL,
+  company_name TEXT NOT NULL,
+  sector       TEXT,
+  price        NUMERIC(12,4),
+  change_pct   NUMERIC(6,2),
+  volume       BIGINT,
+  market_cap   TEXT,
+  data_date    DATE NOT NULL,
+  source_url   TEXT DEFAULT 'https://www.bse.co.bw'
+);
+ALTER TABLE market_data ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public read market_data" ON market_data FOR SELECT USING (TRUE);
+
+-- SME Daily Log
+CREATE TABLE IF NOT EXISTS sme_daily_log (
+  id            UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  log_date      DATE NOT NULL DEFAULT CURRENT_DATE,
+  business_name TEXT NOT NULL,
+  units_sold    INTEGER,
+  unit_price    NUMERIC(8,2),
+  revenue       NUMERIC(10,2),
+  cogs          NUMERIC(10,2),
+  profit        NUMERIC(10,2),
+  notes         TEXT,
+  district      TEXT DEFAULT 'Ngami',
+  town          TEXT DEFAULT 'Maun'
+);
+ALTER TABLE sme_daily_log ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public read sme_daily_log" ON sme_daily_log FOR SELECT USING (TRUE);
+
+-- Data Sources Registry
+CREATE TABLE IF NOT EXISTS data_sources (
+  id           UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  name         TEXT NOT NULL,
+  full_name    TEXT,
+  url          TEXT,
+  category     TEXT,
+  active       BOOLEAN DEFAULT TRUE,
+  last_checked DATE
+);
+ALTER TABLE data_sources ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public read data_sources" ON data_sources FOR SELECT USING (TRUE);
+
+-- Companies Directory
+CREATE TABLE IF NOT EXISTS companies (
+  id          UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  created_at  TIMESTAMPTZ DEFAULT NOW(),
+  name        TEXT NOT NULL,
+  ticker      TEXT,
+  sector      TEXT,
+  district    TEXT,
+  listed      BOOLEAN DEFAULT FALSE,
+  description TEXT,
+  source_url  TEXT
+);
+ALTER TABLE companies ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public read companies" ON companies FOR SELECT USING (TRUE);
+
+-- Seed Data: Sources
+INSERT INTO data_sources (name, full_name, url, category) VALUES
+  ('BSE', 'Botswana Stock Exchange', 'https://www.bse.co.bw', 'market'),
+  ('BITC', 'Botswana Investment & Trade Centre', 'https://www.bitc.co.bw', 'government'),
+  ('Stats Botswana', 'Statistics Botswana', 'https://www.statsbots.org.bw', 'government'),
+  ('BURS', 'Botswana Unified Revenue Service', 'https://www.burs.org.bw', 'government'),
+  ('Bank of Botswana', 'Bank of Botswana', 'https://www.bankofbotswana.bw', 'government'),
+  ('IFC', 'International Finance Corporation', 'https://www.ifc.org', 'international'),
+  ('Bokra', 'Bokra.co.bw', 'https://bokra.co.bw', 'market'),
+  ('SAGEWORKS Field', 'SAGEWORKS AI Field Data', 'https://github.com/PeacebinfLow', 'sme');
+
+-- Seed Data: Articles
+INSERT INTO articles (title, excerpt, tag, sector, source_name, source_url, source_date, featured) VALUES
+(
+  'BITC 2024: Botswana attracted over P4.2 billion in investment with ICT and tourism leading sector growth',
+  'The Botswana Investment and Trade Centre''s 2024 Annual Report reveals a marked shift in the country''s investment profile. ICT, Financial Services, and Tourism are the fastest-growing attraction categories. BITC''s BOSSC processed record volumes of investor inquiries.',
+  'investment', 'financial-services', 'BITC', 'https://www.bitc.co.bw', '2024-12-31', TRUE
+),
+(
+  'IFC Diagnostic: Botswana''s diamond dependency remains its greatest structural risk',
+  'The IFC Country Private Sector Diagnostic flags that minerals contribute ~30% of government revenue. The 8.5% GDP contraction in 2020 illustrates the urgency to diversify beyond diamonds.',
+  'government', 'mining', 'IFC', 'https://www.ifc.org', '2022-06-01', FALSE
+),
+(
+  'Private sector opportunity in Botswana''s energy transition remains largely untapped',
+  'SOE dominance in the energy sector has constrained private investment, but regulatory reforms are creating entry points for independent power producers. Solar potential remains largely unexplored.',
+  'trade', 'energy', 'IFC', 'https://www.ifc.org', '2022-06-01', FALSE
+),
+(
+  'Okavango Delta positions Botswana as Africa''s premium conservation tourism market',
+  'Botswana''s high-value low-volume tourism model continues to attract premium international visitors. Community-based tourism and digital booking infrastructure are key investment opportunities.',
+  'market', 'tourism', 'IFC', 'https://www.ifc.org', '2022-06-01', FALSE
+);
+
+-- Seed Data: SME Logs
+INSERT INTO sme_daily_log (log_date, business_name, units_sold, unit_price, revenue, cogs, profit, notes) VALUES
+  ('2026-05-05', 'ICE AGE Investment', 7, 10.00, 70.00, 8.40, 61.60, 'Normal day. Chest freezer at 50% capacity.'),
+  ('2026-05-05', 'Kebab Operation', 24, 10.00, 240.00, 95.00, 145.00, '12 morning + 12 evening. Full sell-through.');
+
+-- Done
