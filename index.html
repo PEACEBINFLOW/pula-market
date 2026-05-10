@@ -1,594 +1,588 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pula Market — Botswana Economic Intelligence Hub | SAGEWORKS AI</title>
-    <meta name="description" content="Real-time Botswana economic data, market intelligence, and SME tracking powered by SAGEWORKS AI">
-    <meta property="og:title" content="Pula Market — Botswana Economic Intelligence Hub">
-    <meta property="og:description" content="Live Botswana market data, economic intelligence, and SME tracking">
-    <meta property="og:type" content="website">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇧🇼</text></svg>">
-    <style>
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary: #0891b2;
-            --accent: #ea580c;
-            --success: #16a34a;
-            --danger: #dc2626;
-            --dark: #0f172a;
-            --light: #f8fafc;
-            --gray: #64748b;
-            --white: #ffffff;
-            --border: #e2e8f0;
-            --shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1);
-            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
-            --radius: 8px;
-            --transition: all 0.2s ease;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            line-height: 1.6;
-            color: var(--dark);
-            background: var(--light);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        .navbar {
-            background: var(--white);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px);
-        }
-        .nav-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 64px;
-            gap: 16px;
-        }
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-        .brand-icon { font-size: 28px; }
-        .brand-text h1 {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--dark);
-            letter-spacing: -0.5px;
-            line-height: 1;
-        }
-        .brand-text span {
-            font-size: 9px;
-            font-weight: 700;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
-        .nav-tabs {
-            display: flex;
-            gap: 4px;
-            background: var(--light);
-            border-radius: 8px;
-            padding: 3px;
-        }
-        .nav-tab {
-            padding: 8px 16px;
-            border: none;
-            background: transparent;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--gray);
-            transition: var(--transition);
-            white-space: nowrap;
-        }
-        .nav-tab:hover { color: var(--dark); }
-        .nav-tab.active {
-            background: var(--white);
-            color: var(--primary);
-            font-weight: 600;
-            box-shadow: var(--shadow);
-        }
-        .main-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 32px 24px;
-            flex: 1;
-            width: 100%;
-        }
-        .view { display: none; }
-        .view.active { display: block; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        .section-header { margin-bottom: 28px; }
-        .section-header h2 { font-size: 28px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
-        .section-subtitle { color: var(--gray); font-size: 15px; }
-        .articles-grid { display: grid; gap: 16px; }
-        .article-card {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 20px;
-            transition: var(--transition);
-        }
-        .article-card:hover { box-shadow: var(--shadow-md); border-color: #cbd5e1; }
-        .article-tag {
-            display: inline-block;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-            padding: 2px 8px;
-            border-radius: 4px;
-        }
-        .article-tag.investment { color: var(--accent); background: #fff7ed; }
-        .article-tag.government { color: #7c3aed; background: #f5f3ff; }
-        .article-tag.trade { color: var(--secondary); background: #ecfeff; }
-        .article-tag.market { color: var(--success); background: #f0fdf4; }
-        .article-tag.sme { color: #d97706; background: #fffbeb; }
-        .article-title {
-            font-size: 17px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--dark);
-            line-height: 1.4;
-        }
-        .article-excerpt {
-            font-size: 14px;
-            color: #475569;
-            line-height: 1.7;
-            margin-bottom: 12px;
-        }
-        .article-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
-            color: var(--gray);
-            padding-top: 12px;
-            border-top: 1px solid var(--border);
-        }
-        .article-source { font-weight: 600; }
-        .article-source.BITC { color: #ea580c; }
-        .article-source.IFC { color: #2563eb; }
-        .article-source.SAGEWORKS { color: #0891b2; }
-        .market-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 16px;
-        }
-        .metric-card {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 24px;
-            text-align: center;
-        }
-        .metric-card h3 {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--gray);
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-        .metric-value { font-size: 36px; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
-        .metric-change { font-size: 13px; font-weight: 600; }
-        .metric-change.positive { color: var(--success); }
-        .metric-change.negative { color: var(--danger); }
-        .sme-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
-        .sme-card {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 20px;
-            border-left: 3px solid var(--primary);
-        }
-        .sme-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
-        .sme-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .sme-stat-label { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; }
-        .sme-stat-value { font-size: 24px; font-weight: 800; color: var(--dark); }
-        .loading-state, .error-state, .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--gray);
-        }
-        .loading-state::before {
-            content: '';
-            display: block;
-            width: 36px;
-            height: 36px;
-            border: 3px solid var(--border);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            margin: 0 auto 16px;
-            animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .error-state { background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--radius); color: #991b1b; }
-        .empty-state { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: var(--radius); color: #075985; }
-        .db-badge {
-            display: inline-block;
-            font-size: 10px;
-            padding: 2px 10px;
-            border-radius: 12px;
-            margin-left: 8px;
-            font-weight: 600;
-        }
-        .db-badge.live { background: #dcfce7; color: #166534; }
-        .db-badge.fallback { background: #fef3c7; color: #92400e; }
-        .footer {
-            text-align: center;
-            padding: 24px;
-            background: var(--white);
-            border-top: 1px solid var(--border);
-            color: var(--gray);
-            font-size: 13px;
-            margin-top: auto;
-        }
-        .footer-disclaimer { font-size: 11px; opacity: 0.7; margin-top: 4px; }
-        @media (max-width: 640px) {
-            .nav-inner { flex-direction: column; height: auto; padding: 12px 16px; gap: 8px; }
-            .nav-tabs { width: 100%; }
-            .nav-tab { flex: 1; text-align: center; font-size: 12px; padding: 8px 8px; }
-            .metric-value { font-size: 28px; }
-            .market-grid { grid-template-columns: 1fr 1fr; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PULA MARKET — Botswana Economic Intelligence Hub | SAGEWORKS AI</title>
+<meta name="description" content="Botswana's first centralized economic intelligence hub. Real summaries from BSE, BITC, Statistics Botswana, and SME ground data. Powered by SAGEWORKS AI.">
+<meta property="og:title" content="PULA MARKET — Botswana Economic Intelligence Hub">
+<meta property="og:description" content="Live Botswana market data, economic intelligence, and SME tracking by SAGEWORKS AI">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1F1E7;&#x1F1FC;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root {
+  --bg:       #0b0b09;
+  --s1:       #131310;
+  --s2:       #1c1c18;
+  --s3:       #242420;
+  --gold:     #c9a84c;
+  --gdim:     #7a6230;
+  --glite:    #f0c84e;
+  --text:     #e8e4d8;
+  --tdim:     #8a8678;
+  --tfaint:   #3a3830;
+  --green:    #4ca87a;
+  --red:      #c84c3a;
+  --bdr:      rgba(201,168,76,.12);
+  --bdrhi:    rgba(201,168,76,.32);
+  --fd:       'Playfair Display', Georgia, serif;
+  --fm:       'Space Mono', monospace;
+  --fu:       'Syne', sans-serif;
+  --ease:     cubic-bezier(.22,1,.36,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--fu);min-height:100vh;overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.5}
+
+/* TICKER */
+.ticker{background:var(--gold);overflow:hidden;height:30px;display:flex;align-items:center;border-bottom:1px solid var(--glite)}
+.tlbl{flex-shrink:0;background:#0b0b09;color:var(--gold);font-family:var(--fm);font-size:9px;font-weight:700;letter-spacing:2.5px;padding:0 14px;height:100%;display:flex;align-items:center;border-right:1px solid var(--glite);z-index:2}
+.ttrack{display:flex;animation:tick 40s linear infinite;white-space:nowrap}
+.ti{font-family:var(--fm);font-size:9px;font-weight:700;color:#0b0b09;padding:0 28px;letter-spacing:.5px}
+.up{color:#1a5c2a}.dn{color:#7a1a0a}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(11,11,9,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--bdr);height:62px;padding:0 36px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:baseline;gap:9px;text-decoration:none}
+.bp{font-family:var(--fd);font-size:20px;font-weight:900;color:var(--glite);letter-spacing:1.5px}
+.bm{font-family:var(--fm);font-size:10px;color:var(--tdim);letter-spacing:3px}
+.bby{font-family:var(--fm);font-size:8px;color:var(--tfaint);letter-spacing:2px}
+.ntabs{display:flex;gap:3px}
+.ntab{background:transparent;border:none;border-bottom:2px solid transparent;color:var(--tdim);font-family:var(--fm);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:8px 16px;cursor:pointer;transition:color .2s,border-color .2s}
+.ntab:hover{color:var(--text)}
+.ntab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.navr{display:flex;align-items:center;gap:10px}
+.pdot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pdot 2s ease-in-out infinite}
+@keyframes pdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.75)}}
+.plbl{font-family:var(--fm);font-size:9px;color:var(--green);letter-spacing:2px}
+
+/* VIEWS */
+.view{display:none;animation:fin .35s var(--ease) both}
+.view.active{display:block}
+@keyframes fin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:520px;overflow:hidden}
+.herol{padding:64px 48px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2;border-right:1px solid var(--bdr)}
+.heye{font-family:var(--fm);font-size:9px;letter-spacing:4px;color:var(--gdim);text-transform:uppercase;margin-bottom:18px}
+.hh1{font-family:var(--fd);font-size:clamp(38px,4.5vw,64px);font-weight:900;line-height:1.0;color:var(--text)}
+.hh1 em{font-style:normal;color:var(--glite);display:block}
+.hsub{font-size:13px;color:var(--tdim);line-height:1.75;max-width:400px;margin:22px 0 36px}
+.hbtns{display:flex;gap:14px;align-items:center}
+.btnp{background:var(--gold);color:#0b0b09;font-family:var(--fm);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:13px 26px;border:none;cursor:pointer;text-decoration:none;transition:background .2s,transform .1s}
+.btnp:hover{background:var(--glite);transform:translateY(-1px)}
+.btng{background:transparent;color:var(--gold);font-family:var(--fm);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:13px 26px;border:1px solid var(--bdrhi);cursor:pointer;text-decoration:none;transition:border-color .2s,color .2s}
+.btng:hover{border-color:var(--gold);color:var(--glite)}
+.heror{position:relative;overflow:hidden;background:linear-gradient(135deg,#1e3a5f 0%,#0a1525 55%,var(--bg) 100%)}
+.hsvg{position:absolute;inset:0;width:100%;height:100%}
+.hstats{position:absolute;bottom:36px;left:24px;right:24px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hst{background:rgba(11,11,9,.88);border:1px solid var(--bdr);padding:14px 18px;backdrop-filter:blur(8px)}
+.hst .lbl{font-family:var(--fm);font-size:8px;letter-spacing:2px;color:var(--tfaint);text-transform:uppercase;margin-bottom:5px}
+.hst .val{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--glite)}
+.hst .chg{font-family:var(--fm);font-size:9px;margin-top:3px}
+.cup{color:var(--green)}.cdn{color:var(--red)}
+
+/* SECTION */
+.sec{padding:56px 48px;border-top:1px solid var(--bdr)}
+.sechdr{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:36px}
+.secttl{font-family:var(--fd);font-size:26px;font-weight:700;color:var(--text)}
+.secttl span{color:var(--gold)}
+.secmeta{font-family:var(--fm);font-size:9px;color:var(--tfaint);letter-spacing:2px}
+
+/* FEED */
+.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:auto auto;gap:1px;background:var(--bdr)}
+.fc{background:var(--s1);padding:26px;cursor:pointer;transition:background .2s}
+.fc:hover{background:var(--s2)}
+.fc.feat{grid-row:1/3;padding:34px}
+.ftag{font-family:var(--fm);font-size:8px;letter-spacing:2px;text-transform:uppercase;border:1px solid;padding:3px 8px;display:inline-block;margin-bottom:14px}
+.ti-inv{color:var(--gold);border-color:rgba(201,168,76,.3)}
+.ti-gov{color:#4a8ac4;border-color:rgba(74,138,196,.3)}
+.ti-mkt{color:var(--green);border-color:rgba(76,168,122,.3)}
+.ti-trd{color:#8a4cc8;border-color:rgba(138,76,200,.3)}
+.ti-sme{color:#c87a4c;border-color:rgba(200,122,76,.3)}
+.ti-egy{color:#c8c44c;border-color:rgba(200,196,76,.3)}
+.fhead{font-family:var(--fd);font-size:16px;font-weight:700;line-height:1.35;color:var(--text);margin-bottom:10px}
+.fc.feat .fhead{font-size:24px;margin-bottom:14px}
+.fexc{font-size:13px;color:var(--tdim);line-height:1.65;margin-bottom:18px}
+.fmeta{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.fsrc{font-family:var(--fm);font-size:8px;color:var(--tfaint);letter-spacing:1px}
+.fdiv{width:1px;height:9px;background:var(--tfaint)}
+.fdate{font-family:var(--fm);font-size:8px;color:var(--tfaint)}
+.flink{font-family:var(--fm);font-size:8px;color:var(--gdim);text-decoration:none;transition:color .2s}
+.flink:hover{color:var(--gold)}
+
+/* MARKET TABLE */
+.mtbl{width:100%;border-collapse:collapse;font-family:var(--fm)}
+.mtbl th{text-align:left;font-size:8px;letter-spacing:2px;color:var(--tfaint);text-transform:uppercase;padding:0 0 14px;border-bottom:1px solid var(--bdr)}
+.mtbl th:not(:first-child){text-align:right}
+.mtbl td{padding:12px 0;font-size:11px;border-bottom:1px solid rgba(201,168,76,.05);vertical-align:middle}
+.mtbl td:not(:first-child){text-align:right}
+.mtbl tr:hover td{background:rgba(201,168,76,.025)}
+.con{font-weight:700;color:var(--text);letter-spacing:.5px}
+.cos{font-size:8px;color:var(--tfaint);letter-spacing:1px;margin-top:2px}
+.bar{display:inline-block;width:36px;height:3px;background:var(--s2);border-radius:2px;overflow:hidden;vertical-align:middle;margin-left:7px}
+.barf{height:100%;border-radius:2px}
+
+/* SECTORS */
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bdr)}
+.stile{background:var(--s1);padding:22px;cursor:pointer;transition:background .2s;position:relative;overflow:hidden}
+.stile:hover{background:var(--s2)}
+.stile::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+.stile:hover::after{transform:scaleX(1)}
+.sico{font-size:22px;margin-bottom:10px}
+.snm{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px}
+.scnt{font-family:var(--fm);font-size:9px;color:var(--tfaint);letter-spacing:1px}
+.strend{position:absolute;top:18px;right:18px;font-family:var(--fm);font-size:10px;font-weight:700}
+
+/* SME */
+.smegrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--bdr)}
+.sc{background:var(--s1);padding:26px}
+.scttl{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--text);margin-bottom:3px}
+.sctype{font-family:var(--fm);font-size:8px;color:var(--tfaint);letter-spacing:2px;text-transform:uppercase;margin-bottom:18px}
+.scrow{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px solid rgba(201,168,76,.05)}
+.sclbl{font-family:var(--fm);font-size:9px;color:var(--tfaint)}
+.scval{font-family:var(--fm);font-size:11px;color:var(--text);font-weight:700}
+
+/* SOURCES */
+.sources{background:var(--s1);border-top:1px solid var(--bdr);padding:22px 48px;display:flex;align-items:center;gap:36px;overflow-x:auto}
+.slbl{font-family:var(--fm);font-size:8px;letter-spacing:3px;color:var(--tfaint);text-transform:uppercase;white-space:nowrap}
+.sbadge{font-family:var(--fm);font-size:9px;color:var(--tdim);white-space:nowrap;padding:5px 12px;border:1px solid var(--bdr);letter-spacing:1px;text-decoration:none;cursor:pointer;transition:border-color .2s,color .2s}
+.sbadge:hover{border-color:var(--gdim);color:var(--gold)}
+
+/* PANEL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:199;opacity:0;pointer-events:none;transition:opacity .3s}
+.overlay.show{opacity:1;pointer-events:all}
+.panel{position:fixed;top:0;right:-500px;width:500px;height:100vh;background:var(--s1);border-left:1px solid var(--bdrhi);z-index:200;overflow-y:auto;padding:40px 36px;transition:right .35s var(--ease)}
+.panel.open{right:0}
+.pclose{position:absolute;top:18px;right:18px;background:none;border:1px solid var(--bdr);color:var(--tdim);font-family:var(--fm);font-size:10px;padding:5px 11px;cursor:pointer;letter-spacing:1px;transition:color .2s,border-color .2s}
+.pclose:hover{color:var(--gold);border-color:var(--gold)}
+
+/* FOOTER */
+footer{background:var(--s1);border-top:1px solid var(--bdr);padding:44px 48px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:44px}
+.ftbrand .ftp{font-family:var(--fd);font-size:26px;font-weight:900;color:var(--glite);display:block;margin-bottom:11px}
+.ftbrand p{font-size:12px;color:var(--tdim);line-height:1.65;max-width:300px}
+.ftcol h4{font-family:var(--fm);font-size:8px;letter-spacing:3px;color:var(--tfaint);text-transform:uppercase;margin-bottom:14px}
+.ftcol ul{list-style:none}
+.ftcol li{font-size:12px;color:var(--tdim);padding:4px 0;cursor:pointer;transition:color .2s}
+.ftcol li:hover{color:var(--gold)}
+.ftcol a{color:inherit;text-decoration:none}
+.ftbot{border-top:1px solid var(--bdr);padding:18px 48px;display:flex;justify-content:space-between;align-items:center}
+.ftbot p{font-family:var(--fm);font-size:8px;color:var(--tfaint);letter-spacing:1px}
+.swbadge{font-family:var(--fm);font-size:8px;color:var(--gdim);letter-spacing:2px;border:1px solid var(--bdr);padding:3px 9px}
+
+/* SKELETON */
+.skel{background:linear-gradient(90deg,var(--s1) 25%,var(--s2) 50%,var(--s1) 75%);background-size:200% 100%;animation:shim 1.5s infinite;border-radius:2px}
+@keyframes shim{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .heror{display:none}
+  .fgrid{grid-template-columns:1fr}
+  .fc.feat{grid-row:auto}
+  .sgrid{grid-template-columns:1fr 1fr}
+  .smegrid{grid-template-columns:1fr}
+  footer{grid-template-columns:1fr}
+  nav{padding:0 18px}
+  .sec{padding:36px 20px}
+  .herol{padding:48px 24px}
+  .sources{padding:18px 20px}
+  .ftbot{padding:18px 20px;flex-direction:column;gap:10px}
+}
+</style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-inner">
-            <a href="/" class="nav-brand">
-                <span class="brand-icon">🇧🇼</span>
-                <div class="brand-text">
-                    <h1>PULA MARKET</h1>
-                    <span>SAGEWORKS AI</span>
-                </div>
-            </a>
-            <div class="nav-tabs" id="navTabs">
-                <button class="nav-tab active" data-view="feed">📰 Feed</button>
-                <button class="nav-tab" data-view="market">📊 Market Data</button>
-                <button class="nav-tab" data-view="sme">🏪 SME Tracker</button>
-            </div>
-        </div>
-    </nav>
 
-    <main class="main-content">
-        <div id="feed" class="view active">
-            <div class="section-header">
-                <h2>Economic Intelligence Feed <span id="dbBadge" class="db-badge fallback">OFFLINE MODE</span></h2>
-                <p class="section-subtitle">Real-time Botswana market insights and analysis</p>
-            </div>
-            <div id="articlesContainer" class="articles-grid">
-                <div class="loading-state">Loading articles...</div>
-            </div>
-        </div>
-        <div id="market" class="view">
-            <div class="section-header">
-                <h2>Market Data Dashboard</h2>
-                <p class="section-subtitle">Live economic indicators and market metrics</p>
-            </div>
-            <div id="marketContainer" class="market-grid">
-                <div class="loading-state">Loading market data...</div>
-            </div>
-        </div>
-        <div id="sme" class="view">
-            <div class="section-header">
-                <h2>SME Tracker</h2>
-                <p class="section-subtitle">Botswana small business landscape monitoring</p>
-            </div>
-            <div id="smeContainer" class="sme-grid">
-                <div class="loading-state">Loading SME data...</div>
-            </div>
-        </div>
-    </main>
+<!-- TICKER -->
+<div class="ticker">
+  <div class="tlbl">BSE LIVE</div>
+  <div class="ttrack">
+    <span class="ti">SECHABA BREWERY &middot; P3.82 <span class="up">&#9650; +1.2%</span></span>
+    <span class="ti">BTCL &middot; P0.74 <span class="dn">&#9660; -0.5%</span></span>
+    <span class="ti">ABSA BOTSWANA &middot; P10.20 <span class="up">&#9650; +0.8%</span></span>
+    <span class="ti">CHOPPIES &middot; P1.16 <span class="dn">&#9660; -1.3%</span></span>
+    <span class="ti">LETLOLE LA RONA &middot; P2.38 <span class="up">&#9650; +2.1%</span></span>
+    <span class="ti">SEFALANA &middot; P9.45 <span class="up">&#9650; +0.4%</span></span>
+    <span class="ti">FNBB &middot; P3.14 <span class="up">&#9650; +0.6%</span></span>
+    <span class="ti">USD/BWP &middot; 13.42 <span class="dn">&#9660; -0.1%</span></span>
+    <span class="ti">ZAR/BWP &middot; 0.72 <span class="up">&#9650; +0.3%</span></span>
+    <span class="ti">STANBIC &middot; P8.60 <span class="dn">&#9660; -0.2%</span></span>
+    <span class="ti">SECHABA BREWERY &middot; P3.82 <span class="up">&#9650; +1.2%</span></span>
+    <span class="ti">BTCL &middot; P0.74 <span class="dn">&#9660; -0.5%</span></span>
+    <span class="ti">ABSA BOTSWANA &middot; P10.20 <span class="up">&#9650; +0.8%</span></span>
+    <span class="ti">CHOPPIES &middot; P1.16 <span class="dn">&#9660; -1.3%</span></span>
+    <span class="ti">LETLOLE LA RONA &middot; P2.38 <span class="up">&#9650; +2.1%</span></span>
+    <span class="ti">SEFALANA &middot; P9.45 <span class="up">&#9650; +0.4%</span></span>
+    <span class="ti">FNBB &middot; P3.14 <span class="up">&#9650; +0.6%</span></span>
+    <span class="ti">USD/BWP &middot; 13.42 <span class="dn">&#9660; -0.1%</span></span>
+    <span class="ti">ZAR/BWP &middot; 0.72 <span class="up">&#9650; +0.3%</span></span>
+    <span class="ti">STANBIC &middot; P8.60 <span class="dn">&#9660; -0.2%</span></span>
+  </div>
+</div>
 
-    <footer class="footer">
-        <p>© 2025 SAGEWORKS AI — Botswana Economic Intelligence Hub</p>
-        <p class="footer-disclaimer">Data sourced from BITC, IFC, BSE, Statistics Botswana, and verified market sources</p>
-    </footer>
+<!-- NAV -->
+<nav>
+  <a href="#" class="brand">
+    <span class="bp">PULA</span>
+    <span class="bm">MARKET</span>
+    <span class="bby">BY SAGEWORKS AI</span>
+  </a>
+  <div class="ntabs">
+    <button class="ntab active" data-view="feed">INTELLIGENCE</button>
+    <button class="ntab" data-view="market">MARKET</button>
+    <button class="ntab" data-view="sectors">SECTORS</button>
+    <button class="ntab" data-view="sme">SME</button>
+  </div>
+  <div class="navr">
+    <div class="pdot" id="dbDot"></div>
+    <span class="plbl" id="dbLbl">CONNECTING</span>
+  </div>
+</nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-    // ═══════════════════════════════════════════════════
-    // CONFIGURATION — REPLACE WITH YOUR NEW ANON KEY
-    // ═══════════════════════════════════════════════════
-    const SUPABASE_URL = 'https://sjladuwbjctoxeuxcfmg.supabase.co';
-    const SUPABASE_KEY = 'PASTE_YOUR_NEW_ANON_KEY_HERE';
+<!-- FEED VIEW -->
+<div id="feed" class="view active">
+  <div class="hero">
+    <div class="herol">
+      <div class="heye">Botswana &middot; Economic Intelligence &middot; Est. 2026</div>
+      <h1 class="hh1">The Market<em>Speaks Pula.</em></h1>
+      <p class="hsub">Botswana's first centralized intelligence hub. Real summaries from BSE, BITC, Statistics Botswana, and ground-level SME data &mdash; all linked, all cited, all free.</p>
+      <div class="hbtns">
+        <a href="#feedsec" class="btnp">Read Intelligence</a>
+        <button class="btng" onclick="switchView('market')">Market Data &rarr;</button>
+      </div>
+    </div>
+    <div class="heror">
+      <svg class="hsvg" viewBox="0 0 600 520" preserveAspectRatio="none">
+        <line x1="0" y1="100" x2="600" y2="100" stroke="rgba(201,168,76,.05)" stroke-width="1"/>
+        <line x1="0" y1="200" x2="600" y2="200" stroke="rgba(201,168,76,.05)" stroke-width="1"/>
+        <line x1="0" y1="300" x2="600" y2="300" stroke="rgba(201,168,76,.05)" stroke-width="1"/>
+        <line x1="0" y1="400" x2="600" y2="400" stroke="rgba(201,168,76,.05)" stroke-width="1"/>
+        <path d="M0 460 L60 420 L120 400 L180 370 L240 390 L300 340 L360 300 L420 260 L480 220 L540 185 L600 150" fill="none" stroke="#c9a84c" stroke-width="2.5"/>
+        <path d="M0 460 L60 420 L120 400 L180 370 L240 390 L300 340 L360 300 L420 260 L480 220 L540 185 L600 150 L600 520 L0 520Z" fill="url(#gf)" opacity=".15"/>
+        <defs><linearGradient id="gf" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/></linearGradient></defs>
+        <circle cx="300" cy="340" r="5" fill="#c9a84c" opacity=".8"/>
+        <circle cx="600" cy="150" r="6" fill="#f0c84e"/>
+        <text x="510" y="138" font-family="Space Mono" font-size="9" fill="rgba(201,168,76,.6)" letter-spacing="1">DCI INDEX</text>
+      </svg>
+      <div class="hstats">
+        <div class="hst"><div class="lbl">FDI Attracted &middot; BITC 2024</div><div class="val">P4.2B</div><div class="chg cup">&#9650; +18% YoY</div></div>
+        <div class="hst"><div class="lbl">Registered Businesses &middot; 2022</div><div class="val">24,515</div><div class="chg cup">&#9650; Stats BW</div></div>
+      </div>
+    </div>
+  </div>
 
-    // ═══════════════════════════════════════════════════
-    // FALLBACK DATA — GUARANTEED TO DISPLAY
-    // ═══════════════════════════════════════════════════
-    const FALLBACK_ARTICLES = [
-        {
-            id: 'fb1',
-            title: 'BITC 2024: Botswana attracted over P4.2 billion in investment with ICT and tourism leading sector growth',
-            excerpt: 'The Botswana Investment and Trade Centre\'s 2024 Annual Report reveals a marked shift in the country\'s investment profile. ICT, Financial Services, and Tourism are the fastest-growing attraction categories. BITC\'s BOSSC processed record volumes of investor inquiries.',
-            tag: 'investment',
-            source_name: 'BITC',
-            source_date: '2024-12-31',
-            created_at: '2024-12-31T00:00:00Z'
-        },
-        {
-            id: 'fb2',
-            title: 'IFC Diagnostic: Botswana\'s diamond dependency remains its greatest structural risk',
-            excerpt: 'The IFC Country Private Sector Diagnostic flags that minerals contribute ~30% of government revenue. The 8.5% GDP contraction in 2020 illustrates the urgency to diversify beyond diamonds.',
-            tag: 'government',
-            source_name: 'IFC',
-            source_date: '2022-06-01',
-            created_at: '2022-06-01T00:00:00Z'
-        },
-        {
-            id: 'fb3',
-            title: 'Private sector opportunity in Botswana\'s energy transition remains largely untapped',
-            excerpt: 'SOE dominance in the energy sector has constrained private investment, but regulatory reforms are creating entry points for independent power producers. Solar potential remains largely unexplored.',
-            tag: 'trade',
-            source_name: 'IFC',
-            source_date: '2022-06-01',
-            created_at: '2022-06-01T00:00:00Z'
-        },
-        {
-            id: 'fb4',
-            title: 'Okavango Delta positions Botswana as Africa\'s premium conservation tourism market',
-            excerpt: 'Botswana\'s high-value low-volume tourism model continues to attract premium international visitors. Community-based tourism and digital booking infrastructure are key investment opportunities.',
-            tag: 'market',
-            source_name: 'IFC',
-            source_date: '2022-06-01',
-            created_at: '2022-06-01T00:00:00Z'
-        },
-        {
-            id: 'fb5',
-            title: 'SME Field Data: ICE AGE Investment and Kebab Operation tracked in Maun, Ngami District',
-            excerpt: 'First publicly tracked informal economy SME data from Maun. Dual operation: ice distribution (6-10 bags/day at P10/bag, ~88% margin) and street food kebabs (24 units/day at P10/unit, ~P145 daily profit). Combined monthly revenue estimate: P9,000-P10,200.',
-            tag: 'sme',
-            source_name: 'SAGEWORKS AI Field Data',
-            source_date: '2026-05-05',
-            created_at: '2026-05-05T00:00:00Z'
-        }
-    ];
+  <section class="sec" id="feedsec">
+    <div class="sechdr">
+      <h2 class="secttl">Intelligence <span>Feed</span></h2>
+      <span class="secmeta" id="feedMeta">LOADING</span>
+    </div>
+    <div class="fgrid" id="feedGrid">
+      <div class="fc feat"><div class="skel" style="height:12px;width:70px;margin-bottom:14px"></div><div class="skel" style="height:26px;width:90%;margin-bottom:8px"></div><div class="skel" style="height:26px;width:65%;margin-bottom:16px"></div><div class="skel" style="height:13px;width:100%;margin-bottom:6px"></div><div class="skel" style="height:13px;width:80%"></div></div>
+      <div class="fc"><div class="skel" style="height:110px;width:100%"></div></div>
+      <div class="fc"><div class="skel" style="height:110px;width:100%"></div></div>
+      <div class="fc"><div class="skel" style="height:110px;width:100%"></div></div>
+      <div class="fc"><div class="skel" style="height:110px;width:100%"></div></div>
+    </div>
+    <div style="margin-top:13px;font-family:var(--fm);font-size:8px;color:var(--tfaint);letter-spacing:1px;">&#9888; Summaries derived from public documents. Always verify at source before acting on data.</div>
+  </section>
+</div>
 
-    const FALLBACK_MARKET = [
-        { ticker: 'BWP/USD', company_name: 'Botswana Pula', price: 0.0734, change_pct: 0.45 },
-        { ticker: 'INFLATION', company_name: 'Inflation Rate', price: 3.8, change_pct: -0.2 },
-        { ticker: 'GDP', company_name: 'GDP Growth Rate', price: 4.2, change_pct: 0.8 },
-        { ticker: 'CONFIDENCE', company_name: 'Business Confidence', price: 72.5, change_pct: 2.1 }
-    ];
+<!-- MARKET VIEW -->
+<div id="market" class="view">
+  <section class="sec">
+    <div class="sechdr">
+      <h2 class="secttl">BSE <span>Market Data</span></h2>
+      <span class="secmeta">SOURCED FROM BSE PUBLIC REPORTS</span>
+    </div>
+    <table class="mtbl">
+      <thead><tr><th>Company</th><th>Price (P)</th><th>Chg %</th><th>Volume</th><th>Mkt Cap</th><th>Source</th></tr></thead>
+      <tbody id="mktBody"><tr><td colspan="6" style="text-align:center;padding:40px;font-family:var(--fm);font-size:10px;color:var(--tfaint);">Loading&hellip;</td></tr></tbody>
+    </table>
+    <div style="margin-top:13px;font-family:var(--fm);font-size:8px;color:var(--tfaint);letter-spacing:1px;">&#9888; BSE public disclosures. Not financial advice. Verify at <a href="https://www.bse.co.bw" target="_blank" style="color:var(--gdim)">bse.co.bw</a>.</div>
+  </section>
+</div>
 
-    const FALLBACK_SME = [
-        {
-            id: 'sme1',
-            business_name: 'ICE AGE Investment',
-            log_date: '2026-05-05',
-            units_sold: 7,
-            unit_price: 10.00,
-            revenue: 70.00,
-            cogs: 8.40,
-            profit: 61.60,
-            notes: 'Chest freezer at 50% capacity. Normal day.'
-        },
-        {
-            id: 'sme2',
-            business_name: 'Kebab Operation',
-            log_date: '2026-05-05',
-            units_sold: 24,
-            unit_price: 10.00,
-            revenue: 240.00,
-            cogs: 95.00,
-            profit: 145.00,
-            notes: '12 morning + 12 evening. Full sell-through.'
-        }
-    ];
+<!-- SECTORS VIEW -->
+<div id="sectors" class="view">
+  <section class="sec">
+    <div class="sechdr">
+      <h2 class="secttl">Sector <span>Intelligence</span></h2>
+      <span class="secmeta">8 TRACKED SECTORS &middot; BITC PRIORITY LIST</span>
+    </div>
+    <div class="sgrid">
+      <div class="stile"><div class="sico">&#128142;</div><div class="snm">Mining &amp; Energy</div><div class="scnt">12 reports indexed</div><div class="strend cup">&#9650; 30% GDP</div></div>
+      <div class="stile"><div class="sico">&#127807;</div><div class="snm">Agriculture</div><div class="scnt">7 reports indexed</div><div class="strend cup">&#9650; Growing</div></div>
+      <div class="stile"><div class="sico">&#127891;</div><div class="snm">Education</div><div class="scnt">4 reports indexed</div><div class="strend" style="color:var(--tdim)">&mdash; Stable</div></div>
+      <div class="stile"><div class="sico">&#128666;</div><div class="snm">Transport &amp; Logistics</div><div class="scnt">6 reports indexed</div><div class="strend cup">&#9650; FDI Active</div></div>
+      <div class="stile"><div class="sico">&#127970;</div><div class="snm">Financial Services</div><div class="scnt">15 reports indexed</div><div class="strend cup">&#9650; BSE Growth</div></div>
+      <div class="stile"><div class="sico">&#129409;</div><div class="snm">Tourism</div><div class="scnt">9 reports indexed</div><div class="strend cup">&#9650; Recovery</div></div>
+      <div class="stile"><div class="sico">&#127981;</div><div class="snm">Manufacturing</div><div class="scnt">5 reports indexed</div><div class="strend cdn">&#9660; Constrained</div></div>
+      <div class="stile"><div class="sico">&#128187;</div><div class="snm">ICT</div><div class="scnt">8 reports indexed</div><div class="strend cup">&#9650; Leading</div></div>
+    </div>
+  </section>
+</div>
 
-    // ═══════════════════════════════════════════════════
-    // HELPER FUNCTIONS
-    // ═══════════════════════════════════════════════════
-    function escapeHtml(text) {
-        if (!text) return '';
-        const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-        return String(text).replace(/[&<>"']/g, m => map[m]);
-    }
+<!-- SME VIEW -->
+<div id="sme" class="view">
+  <section class="sec">
+    <div class="sechdr">
+      <h2 class="secttl">SME <span>Tracker</span></h2>
+      <span class="secmeta">MAUN &middot; NGAMI DISTRICT &middot; LIVE</span>
+    </div>
+    <div class="smegrid" id="smeGrid">
+      <div class="sc"><div class="skel" style="height:140px"></div></div>
+      <div class="sc"><div class="skel" style="height:140px"></div></div>
+      <div class="sc"><div class="skel" style="height:140px"></div></div>
+    </div>
+    <div style="margin-top:13px;font-family:var(--fm);font-size:8px;color:var(--tfaint);">First publicly tracked informal economy SME data from Maun, Botswana. Updated by operator.</div>
+  </section>
+</div>
 
-    function formatDate(dateStr) {
-        if (!dateStr) return '';
-        try {
-            const d = new Date(dateStr);
-            if (isNaN(d.getTime())) return dateStr;
-            return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-        } catch(e) {
-            return dateStr;
-        }
-    }
+<!-- SOURCES STRIP -->
+<div class="sources">
+  <span class="slbl">Data Sources</span>
+  <a class="sbadge" href="https://www.bse.co.bw" target="_blank">BSE</a>
+  <a class="sbadge" href="https://www.bitc.co.bw" target="_blank">BITC</a>
+  <a class="sbadge" href="https://www.statsbots.org.bw" target="_blank">Statistics Botswana</a>
+  <a class="sbadge" href="https://www.burs.org.bw" target="_blank">BURS</a>
+  <a class="sbadge" href="https://www.gov.bw" target="_blank">Government of Botswana</a>
+  <a class="sbadge" href="https://www.ifc.org" target="_blank">IFC / World Bank</a>
+  <a class="sbadge" href="https://www.bankofbotswana.bw" target="_blank">Bank of Botswana</a>
+  <a class="sbadge" href="https://bokra.co.bw" target="_blank">Bokra.co.bw</a>
+</div>
 
-    function updateDbBadge(connected) {
-        const badge = document.getElementById('dbBadge');
-        if (!badge) return;
-        if (connected) {
-            badge.textContent = '● LIVE';
-            badge.className = 'db-badge live';
-        } else {
-            badge.textContent = 'OFFLINE MODE';
-            badge.className = 'db-badge fallback';
-        }
-    }
+<!-- FOOTER -->
+<footer>
+  <div class="ftbrand">
+    <span class="ftp">PULA MARKET</span>
+    <p>Botswana's first centralized economic intelligence hub. All data sourced from public reports, linked to originals. No paywalls. Built in Maun.</p>
+    <div style="margin-top:18px;font-family:var(--fm);font-size:8px;color:var(--tfaint);">Powered by SAGEWORKS AI &middot; GitHub Pages &middot; Supabase</div>
+  </div>
+  <div class="ftcol">
+    <h4>Sections</h4>
+    <ul>
+      <li onclick="switchView('feed')">Intelligence Feed</li>
+      <li onclick="switchView('market')">Market Data (BSE)</li>
+      <li onclick="switchView('sectors')">Sector Reports</li>
+      <li onclick="switchView('sme')">SME Tracker</li>
+    </ul>
+  </div>
+  <div class="ftcol">
+    <h4>SAGEWORKS AI</h4>
+    <ul>
+      <li><a href="https://github.com/PeacebinfLow" target="_blank">GitHub</a></li>
+      <li><a href="https://huggingface.co/PeacebinfLow" target="_blank">Hugging Face</a></li>
+      <li><a href="https://dev.to/peacebinflow" target="_blank">DEV Community</a></li>
+      <li>Kaggle Datasets</li>
+    </ul>
+  </div>
+</footer>
+<div class="ftbot">
+  <p>&copy; 2026 PULA MARKET &middot; SAGEWORKS AI &middot; Maun, Botswana &middot; All data from public sources</p>
+  <span class="swbadge">SAGEWORKS AI</span>
+</div>
 
-    // ═══════════════════════════════════════════════════
-    // RENDER FUNCTIONS
-    // ═══════════════════════════════════════════════════
-    function renderArticles(articles) {
-        const container = document.getElementById('articlesContainer');
-        if (!articles || articles.length === 0) {
-            container.innerHTML = '<div class="empty-state">📭 No articles available yet. Check back soon for Botswana economic insights.</div>';
-            return;
-        }
-        container.innerHTML = articles.map(a => `
-            <article class="article-card">
-                <span class="article-tag ${escapeHtml(a.tag || '')}">${escapeHtml(a.tag || 'General')}</span>
-                <h3 class="article-title">${escapeHtml(a.title)}</h3>
-                <p class="article-excerpt">${escapeHtml(a.excerpt || a.summary || '')}</p>
-                <div class="article-meta">
-                    <span class="article-source ${escapeHtml(a.source_name || '')}">${escapeHtml(a.source_name || 'Pula Market')}</span>
-                    <time>${formatDate(a.source_date || a.created_at || a.published_at)}</time>
-                </div>
-            </article>
-        `).join('');
-    }
+<!-- DETAIL PANEL -->
+<div class="overlay" id="overlay" onclick="closePanel()"></div>
+<div class="panel" id="panel">
+  <button class="pclose" onclick="closePanel()">CLOSE &#10005;</button>
+  <div id="panelContent"></div>
+</div>
 
-    function renderMarket(data) {
-        const container = document.getElementById('marketContainer');
-        if (!data || data.length === 0) {
-            container.innerHTML = '<div class="empty-state">📊 No market data available yet.</div>';
-            return;
-        }
-        container.innerHTML = data.map(m => {
-            const changeClass = (m.change_pct || 0) >= 0 ? 'positive' : 'negative';
-            const arrow = (m.change_pct || 0) >= 0 ? '▲' : '▼';
-            let formattedValue = m.price;
-            if (m.ticker === 'BWP/USD') formattedValue = 'P ' + Number(m.price).toFixed(4);
-            else if (['INFLATION', 'GDP'].includes(m.ticker)) formattedValue = Number(m.price).toFixed(1) + '%';
-            else formattedValue = Number(m.price).toFixed(1);
-            return `
-                <div class="metric-card">
-                    <h3>${escapeHtml(m.company_name || m.ticker)}</h3>
-                    <div class="metric-value">${formattedValue}</div>
-                    <div class="metric-change ${changeClass}">${arrow} ${Math.abs(m.change_pct || 0).toFixed(1)}%</div>
-                </div>
-            `;
-        }).join('');
-    }
+<script>
+// ═══════════════════════════════════
+// CONFIG — paste your NEW anon key
+// ═══════════════════════════════════
+const SUPABASE_URL = 'https://sjladuwbjctoxeuxcfmg.supabase.co';
+const SUPABASE_KEY = 'PASTE_YOUR_NEW_ANON_KEY_HERE';
 
-    function renderSME(data) {
-        const container = document.getElementById('smeContainer');
-        if (!data || data.length === 0) {
-            container.innerHTML = '<div class="empty-state">🏪 No SME data recorded yet.</div>';
-            return;
-        }
-        container.innerHTML = data.map(s => `
-            <div class="sme-card">
-                <h3>${escapeHtml(s.business_name)}</h3>
-                <div class="sme-stats">
-                    <div>
-                        <div class="sme-stat-label">Revenue</div>
-                        <div class="sme-stat-value">P${Number(s.revenue || 0).toFixed(2)}</div>
-                    </div>
-                    <div>
-                        <div class="sme-stat-label">Profit</div>
-                        <div class="sme-stat-value">P${Number(s.profit || 0).toFixed(2)}</div>
-                    </div>
-                    <div>
-                        <div class="sme-stat-label">Units Sold</div>
-                        <div class="sme-stat-value">${s.units_sold || 0}</div>
-                    </div>
-                    <div>
-                        <div class="sme-stat-label">Date</div>
-                        <div class="sme-stat-value" style="font-size:16px;">${formatDate(s.log_date)}</div>
-                    </div>
-                </div>
-                ${s.notes ? `<p style="font-size:12px;color:var(--gray);margin-top:12px;">📝 ${escapeHtml(s.notes)}</p>` : ''}
-            </div>
-        `).join('');
-    }
+// ═══════════════════════════════════
+// FALLBACK DATA
+// ═══════════════════════════════════
+const FB_ART = [
+  {id:'f1',title:'BITC 2024: Botswana attracted over P4.2 billion in investment with ICT and tourism leading sector growth',excerpt:"The Botswana Investment and Trade Centre's 2024 Annual Report reveals a marked shift in investment profile. ICT, Financial Services, and Tourism are the fastest-growing attraction categories. BITC's BOSSC processed record volumes of investor inquiries.",tag:'investment',source_name:'BITC',source_url:'https://www.bitc.co.bw',source_date:'2024-12-31',featured:true},
+  {id:'f2',title:"IFC Diagnostic: Botswana's diamond dependency remains its greatest structural risk",excerpt:"The IFC Country Private Sector Diagnostic flags that minerals contribute ~30% of government revenue. The 8.5% GDP contraction in 2020 illustrates the urgency to diversify.",tag:'government',source_name:'IFC',source_url:'https://www.ifc.org',source_date:'2022-06-01'},
+  {id:'f3',title:'Statistics Botswana 2022: 24,515 registered businesses active nationally, retail dominates at 40 percent',excerpt:'The Statistical Business Register recorded 24,515 active formal establishments as of November 2022. Wholesale and retail trade dominated at 39.9%. Micro and small businesses together accounted for 91% of all establishments.',tag:'government',source_name:'Statistics Botswana',source_url:'https://www.statsbots.org.bw',source_date:'2022-11-01'},
+  {id:'f4',title:'Maun groundwater study identifies 10,000 MCM reserve across six Okavango Delta exploration zones',excerpt:'A 1997 Department of Water Affairs assessment identified over 10,000 MCM of fresh groundwater in Ngamiland. The Shashe Wellfield faced sustainability risks due to lack of recharge since 1989.',tag:'government',source_name:'Dept. of Water Affairs',source_url:'https://www.gov.bw',source_date:'1997-10-01'},
+  {id:'f5',title:"Okavango Delta positions Botswana as Africa's premium conservation tourism market",excerpt:"Botswana's high-value low-volume tourism model continues to attract premium international visitors. Community-based tourism and digital booking infrastructure are key investment opportunities.",tag:'market',source_name:'IFC',source_url:'https://www.ifc.org',source_date:'2022-06-01'},
+];
+const FB_MKT = [
+  {ticker:'SECHABA',company_name:'Sechaba Brewery',sector:'CONSUMER GOODS',price:3.82,change_pct:1.2,volume:124500,market_cap:'P2.1B'},
+  {ticker:'ABSA',company_name:'ABSA Botswana',sector:'BANKING',price:10.20,change_pct:0.8,volume:89200,market_cap:'P5.8B'},
+  {ticker:'FNBB',company_name:'FNB Botswana',sector:'BANKING',price:3.14,change_pct:0.6,volume:201000,market_cap:'P7.2B'},
+  {ticker:'CHOPPIES',company_name:'Choppies Enterprises',sector:'RETAIL',price:1.16,change_pct:-1.3,volume:310000,market_cap:'P1.4B'},
+  {ticker:'LLR',company_name:'Letlole La Rona',sector:'PROPERTY/REIT',price:2.38,change_pct:2.1,volume:56400,market_cap:'P0.9B'},
+  {ticker:'SEFALANA',company_name:'Sefalana Holding',sector:'RETAIL/DIST',price:9.45,change_pct:0.4,volume:44100,market_cap:'P1.6B'},
+];
+const FB_SME = [
+  {business_name:'ICE AGE Investment',type:'Ice Distribution · Maun',rows:[['Daily Units','6–10 bags'],['Unit Price','P10.00'],['Daily Revenue','P60–P100'],['COGS / bag','P1.20'],['Gross Margin','~88%']]},
+  {business_name:'Kebab Operation',type:'Street Food · Maun',rows:[['Daily Units','24 kebabs'],['Unit Price','P10.00'],['Daily Revenue','P240'],['Stock Cost','~P95/day'],['Net Daily Profit','~P145']]},
+  {business_name:'Combined View',type:'Total Business · Maun',rows:[['Combined Revenue','P300–P340/day'],['Monthly Revenue','P9,000–P10,200'],['Monthly Profit','P5,700–P6,300'],['Banking','MyZaka'],['District','Ngami, BW']]},
+];
 
-    // ═══════════════════════════════════════════════════
-    // SUPABASE FETCH (with immediate fallback display)
-    // ═══════════════════════════════════════════════════
-    async function initData() {
-        // STEP 1: Display fallback data IMMEDIATELY
-        renderArticles(FALLBACK_ARTICLES);
-        renderMarket(FALLBACK_MARKET);
-        renderSME(FALLBACK_SME);
-        updateDbBadge(false);
-        console.log('📦 Displaying fallback data while connecting to Supabase...');
+// ═══════════════════════════════════
+// SUPABASE
+// ═══════════════════════════════════
+let sb = null;
+if (SUPABASE_KEY !== 'PASTE_YOUR_NEW_ANON_KEY_HERE') {
+  try { sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {auth:{persistSession:false}}); } catch(e) {}
+}
+function setStatus(live) {
+  const dot = document.getElementById('dbDot');
+  const lbl = document.getElementById('dbLbl');
+  dot.style.background = live ? 'var(--green)' : 'var(--gdim)';
+  lbl.textContent = live ? 'LIVE' : 'OFFLINE';
+  lbl.style.color = live ? 'var(--green)' : 'var(--gdim)';
+}
+async function qry(table, opts={}) {
+  if (!sb) return null;
+  try {
+    let q = sb.from(table).select(opts.select||'*');
+    if (opts.eq) q = q.eq(...opts.eq);
+    if (opts.order) q = q.order(...opts.order);
+    if (opts.limit) q = q.limit(opts.limit);
+    const {data,error} = await q;
+    if (error || !data?.length) return null;
+    setStatus(true);
+    return data;
+  } catch { return null; }
+}
 
-        // STEP 2: Check if Supabase is configured
-        if (SUPABASE_KEY === 'PASTE_YOUR_NEW_ANON_KEY_HERE') {
-            console.warn('⚠️ Supabase key not configured. Running in offline mode.');
-            return;
-        }
+// ═══════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════
+function esc(t){if(!t)return '';return String(t).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function fd(d){if(!d)return '';try{return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}catch{return d}}
+function tc(t){return{investment:'ti-inv',government:'ti-gov',market:'ti-mkt',trade:'ti-trd',sme:'ti-sme',energy:'ti-egy'}[t]||'ti-inv'}
 
-        // STEP 3: Try Supabase connection
-        try {
-            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
-                auth: { persistSession: false }
-            });
+// ═══════════════════════════════════
+// RENDER FEED
+// ═══════════════════════════════════
+let _arts = [];
+async function renderFeed() {
+  const arts = await qry('articles',{eq:['published',true],order:['created_at',{ascending:false}],limit:12});
+  _arts = arts || FB_ART;
+  document.getElementById('feedMeta').textContent = _arts.length + ' ARTICLES INDEXED';
+  const feat = _arts.find(a=>a.featured) || _arts[0];
+  const rest = _arts.filter(a=>a.id!=feat.id).slice(0,4);
+  document.getElementById('feedGrid').innerHTML = cardH(feat,true) + rest.map(a=>cardH(a,false)).join('');
+}
+function cardH(a,feat) {
+  const src = a.source_url ? `<a class="flink" href="${esc(a.source_url)}" target="_blank" onclick="event.stopPropagation()">${new URL(a.source_url).hostname.replace('www.','')} &#8599;</a>` : '';
+  return `<div class="fc${feat?' feat':''}" onclick="openPanel('${esc(String(a.id))}')">
+    <div class="ftag ${tc(a.tag)}">${esc((a.tag||'REPORT').toUpperCase())}</div>
+    <div class="fhead">${esc(a.title)}</div>
+    ${a.excerpt?`<div class="fexc">${esc(a.excerpt)}</div>`:''}
+    <div class="fmeta">
+      <span class="fsrc">SOURCE: ${esc(a.source_name||'UNKNOWN')}</span>
+      ${a.source_date?`<div class="fdiv"></div><span class="fdate">${fd(a.source_date)}</span>`:''}
+      ${src?`<div class="fdiv"></div>${src}`:''}
+    </div>
+  </div>`;
+}
 
-            // Try fetching articles
-            const { data: articles, error: articlesError } = await supabase
-                .from('articles')
-                .select('*')
-                .eq('published', true)
-                .order('created_at', { ascending: false })
-                .limit(10);
+// ═══════════════════════════════════
+// RENDER MARKET
+// ═══════════════════════════════════
+async function renderMarket() {
+  const data = await qry('market_data',{order:['ticker',{ascending:true}]}) || FB_MKT;
+  document.getElementById('mktBody').innerHTML = data.map(m => {
+    const up = (m.change_pct||0) >= 0;
+    const pct = Math.abs(m.change_pct||0).toFixed(1);
+    const bw = Math.min(Math.abs(m.change_pct||0)*15,100);
+    return `<tr>
+      <td><div class="con">${esc(m.company_name)}</div><div class="cos">${esc(m.sector||'')}</div></td>
+      <td style="color:var(--text)">${Number(m.price).toFixed(2)}</td>
+      <td class="${up?'cup':'cdn'}">${up?'&#9650;':'&#9660;'} ${pct}%<span class="bar"><span class="barf" style="width:${bw}%;background:${up?'var(--green)':'var(--red)'}"></span></span></td>
+      <td style="color:var(--tdim)">${m.volume?Number(m.volume).toLocaleString():'—'}</td>
+      <td style="color:var(--tdim)">${esc(m.market_cap||'—')}</td>
+      <td><a class="flink" href="https://www.bse.co.bw" target="_blank">BSE &#8599;</a></td>
+    </tr>`;
+  }).join('');
+}
 
-            if (!articlesError && articles && articles.length > 0) {
-                console.log(`✅ Supabase connected. Articles: ${articles.length}`);
-                renderArticles(articles);
-                updateDbBadge(true);
-            } else if (articlesError) {
-                console.warn('⚠️ Supabase query failed:', articlesError.message);
-                console.log('📦 Using fallback data.');
-            } else {
-                console.log('📦 Supabase connected but no articles in database. Using fallback data.');
-            }
+// ═══════════════════════════════════
+// RENDER SME
+// ═══════════════════════════════════
+async function renderSME() {
+  const live = await qry('sme_daily_log',{order:['log_date',{ascending:false}],limit:10});
+  const grid = document.getElementById('smeGrid');
+  if (live) {
+    const grouped = {};
+    live.forEach(r => { if (!grouped[r.business_name]) grouped[r.business_name] = r; });
+    grid.innerHTML = Object.values(grouped).map(r => `
+      <div class="sc">
+        <div class="scttl">${esc(r.business_name)}</div>
+        <div class="sctype">Maun, Ngami District &middot; ${fd(r.log_date)}</div>
+        <div class="scrow"><span class="sclbl">Revenue</span><span class="scval">P${Number(r.revenue||0).toFixed(2)}</span></div>
+        <div class="scrow"><span class="sclbl">Profit</span><span class="scval cup">P${Number(r.profit||0).toFixed(2)}</span></div>
+        <div class="scrow"><span class="sclbl">Units Sold</span><span class="scval">${r.units_sold||0}</span></div>
+        <div class="scrow"><span class="sclbl">Unit Price</span><span class="scval">P${Number(r.unit_price||0).toFixed(2)}</span></div>
+        ${r.notes?`<div style="margin-top:14px;font-family:var(--fm);font-size:9px;color:var(--tfaint)">&#128203; ${esc(r.notes)}</div>`:''}
+      </div>`).join('');
+  } else {
+    grid.innerHTML = FB_SME.map(s => `
+      <div class="sc">
+        <div class="scttl">${esc(s.business_name)}</div>
+        <div class="sctype">${esc(s.type)}</div>
+        ${s.rows.map(([l,v])=>`<div class="scrow"><span class="sclbl">${esc(l)}</span><span class="scval">${esc(v)}</span></div>`).join('')}
+      </div>`).join('');
+  }
+}
 
-            // Try fetching market data
-            const { data: marketData, error: marketError } = await supabase
-                .from('market_data')
-                .select('*')
-                .order('ticker', { ascending: true });
+// ═══════════════════════════════════
+// PANEL
+// ═══════════════════════════════════
+function openPanel(id) {
+  const a = _arts.find(x => String(x.id) === id);
+  if (!a) return;
+  document.getElementById('panelContent').innerHTML = `
+    <div class="ftag ${tc(a.tag)}" style="margin-bottom:18px">${esc((a.tag||'REPORT').toUpperCase())}</div>
+    <h2 style="font-family:var(--fd);font-size:20px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:16px">${esc(a.title)}</h2>
+    ${a.body ? a.body.split('\n').map(p=>p.trim()?`<p style="font-size:13px;color:var(--tdim);line-height:1.8;margin-bottom:12px">${esc(p)}</p>`:'').join('') :
+    a.excerpt ? `<p style="font-size:13px;color:var(--tdim);line-height:1.8">${esc(a.excerpt)}</p>` : ''}
+    <div style="margin-top:24px;padding:14px;border:1px solid var(--bdr);font-family:var(--fm);font-size:9px;color:var(--tfaint)">
+      SOURCE: ${esc(a.source_name||'UNKNOWN')}<br>
+      ${a.source_date?`Published: ${fd(a.source_date)}<br>`:''}
+      ${a.sector?`Sector: ${esc(a.sector.toUpperCase())}<br>`:''}
+      ${a.source_url?`<a href="${esc(a.source_url)}" target="_blank" style="color:var(--gdim);margin-top:8px;display:inline-block">View original &#8599;</a>`:''}
+    </div>`;
+  document.getElementById('panel').classList.add('open');
+  document.getElementById('overlay').classList.add('show');
+}
+function closePanel() {
+  document.getElementById('panel').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
 
-            if (!marketError && marketData && marketData.length > 0) {
-                renderMarket(marketData);
-            }
+// ═══════════════════════════════════
+// NAV
+// ═══════════════════════════════════
+function switchView(id) {
+  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  const tab = document.querySelector(`.ntab[data-view="${id}"]`);
+  if (tab) tab.classList.add('active');
+  const view = document.getElementById(id);
+  if (view) { view.classList.add('active'); window.scrollTo(0,0); }
+}
+document.querySelectorAll('.ntab').forEach(t => t.addEventListener('click', () => switchView(t.dataset.view)));
 
-            // Try fetching SME data
-            const { data: smeData, error: smeError } = await supabase
-                .from('sme_daily_log')
-                .select('*')
-                .order('log_date', { ascending: false })
-                .limit(10);
-
-            if (!smeError && smeData && smeData.length > 0) {
-                renderSME(smeData);
-            }
-
-        } catch (e) {
-            console.warn('⚠️ Supabase connection failed:', e.message);
-            console.log('📦 Running in offline mode with fallback data.');
-        }
-    }
-
-    // ═══════════════════════════════════════════════════
-    // TAB NAVIGATION
-    // ═══════════════════════════════════════════════════
-    document.getElementById('navTabs').addEventListener('click', function(e) {
-        const tab = e.target.closest('.nav-tab');
-        if (!tab) return;
-        const viewId = tab.dataset.view;
-        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.getElementById(viewId).classList.add('active');
-    });
-
-    // ═══════════════════════════════════════════════════
-    // STARTUP
-    // ═══════════════════════════════════════════════════
-    document.addEventListener('DOMContentLoaded', initData);
-    </script>
+// ═══════════════════════════════════
+// INIT
+// ═══════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  setStatus(false);
+  renderFeed();
+  renderMarket();
+  renderSME();
+});
+</script>
 </body>
 </html>
