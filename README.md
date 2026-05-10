@@ -29,3 +29,17 @@
 See `supabase-schema.sql` for the complete database setup.
 
 ## 📁 Project Structure
+pula-market/
+├── index.html # Complete application (HTML + CSS + JS)
+├── .gitignore
+├── README.md
+└── supabase-schema.sql # Database setup script
+
+text
+
+## 🔧 Local Development
+
+```bash
+git clone https://github.com/PeacebinfLow/pula-market.git
+cd pula-market
+open index.html
