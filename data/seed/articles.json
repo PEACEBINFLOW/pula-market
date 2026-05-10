@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "title": "Botswana's GDP Growth Exceeds Expectations at 4.2% in Q4 2025",
+    "summary": "Botswana's economy demonstrated remarkable resilience with GDP growth surpassing analyst predictions, driven by strong diamond exports and expanding service sector.",
+    "category": "Economic Growth",
+    "published_at": "2025-01-15T08:00:00Z",
+    "source": "Bank of Botswana",
+    "url": "#"
+  },
+  {
+    "id": 2,
+    "title": "Pula Strengthens Against USD Amid Rising Commodity Prices",
+    "summary": "The Botswana Pula gained 1.2% against the US Dollar this week, supported by robust diamond demand and improved investor confidence in the Southern African region.",
+    "category": "Currency Markets",
+    "published_at": "2025-01-14T10:30:00Z",
+    "source": "Bloomberg Africa",
+    "url": "#"
+  },
+  {
+    "id": 3,
+    "title": "SME Sector in Botswana: 12.8% Growth in Tech Startups",
+    "summary": "Botswana's technology SME sector has emerged as the fastest-growing segment, with Gaborone becoming a regional hub for fintech and agritech innovations.",
+    "category": "Small Business",
+    "published_at": "2025-01-13T14:00:00Z",
+    "source": "Botswana Guardian",
+    "url": "#"
+  },
+  {
+    "id": 4,
+    "title": "Inflation Drops to 3.8% - Bank of Botswana May Cut Rates",
+    "summary": "Consumer price inflation fell below the central bank's target range, opening the door for potential monetary policy easing to stimulate economic growth.",
+    "category": "Monetary Policy",
+    "published_at": "2025-01-12T09:15:00Z",
+    "source": "Statistics Botswana",
+    "url": "#"
+  },
+  {
+    "id": 5,
+    "title": "Foreign Direct Investment in Botswana Reaches $890M in 2024",
+    "summary": "Botswana attracted record foreign investment, particularly in mining technology and renewable energy projects, cementing its position as an African investment destination.",
+    "category": "Investment",
+    "published_at": "2025-01-11T11:45:00Z",
+    "source": "Botswana Investment and Trade Centre",
+    "url": "#"
+  },
+  {
+    "id": 6,
+    "title": "Agricultural Sector Modernisation Boosts Food Security",
+    "summary": "Government initiatives in smart agriculture and irrigation technology have increased crop yields by 23%, reducing Botswana's dependence on food imports.",
+    "category": "Agriculture",
+    "published_at": "2025-01-10T07:30:00Z",
+    "source": "Ministry of Agriculture",
+    "url": "#"
+  }
+]
