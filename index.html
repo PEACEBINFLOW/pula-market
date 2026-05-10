@@ -24,7 +24,6 @@
             --border: #e2e8f0;
             --shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1);
             --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
             --radius: 8px;
             --transition: all 0.2s ease;
         }
@@ -38,15 +37,14 @@
             display: flex;
             flex-direction: column;
         }
-        /* Navigation */
         .navbar {
             background: var(--white);
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(10px);
             background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
         }
         .nav-inner {
             max-width: 1200px;
@@ -105,7 +103,6 @@
             font-weight: 600;
             box-shadow: var(--shadow);
         }
-        /* Main Content */
         .main-content {
             max-width: 1200px;
             margin: 0 auto;
@@ -119,11 +116,7 @@
         .section-header { margin-bottom: 28px; }
         .section-header h2 { font-size: 28px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
         .section-subtitle { color: var(--gray); font-size: 15px; }
-        /* Article Cards */
-        .articles-grid {
-            display: grid;
-            gap: 16px;
-        }
+        .articles-grid { display: grid; gap: 16px; }
         .article-card {
             background: var(--white);
             border: 1px solid var(--border);
@@ -131,23 +124,22 @@
             padding: 20px;
             transition: var(--transition);
         }
-        .article-card:hover {
-            box-shadow: var(--shadow-md);
-            border-color: #cbd5e1;
-        }
+        .article-card:hover { box-shadow: var(--shadow-md); border-color: #cbd5e1; }
         .article-tag {
             display: inline-block;
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            color: var(--primary);
             margin-bottom: 8px;
+            padding: 2px 8px;
+            border-radius: 4px;
         }
-        .article-tag.investment { color: var(--accent); }
-        .article-tag.government { color: #7c3aed; }
-        .article-tag.trade { color: var(--secondary); }
-        .article-tag.market { color: var(--success); }
+        .article-tag.investment { color: var(--accent); background: #fff7ed; }
+        .article-tag.government { color: #7c3aed; background: #f5f3ff; }
+        .article-tag.trade { color: var(--secondary); background: #ecfeff; }
+        .article-tag.market { color: var(--success); background: #f0fdf4; }
+        .article-tag.sme { color: #d97706; background: #fffbeb; }
         .article-title {
             font-size: 17px;
             font-weight: 700;
@@ -173,7 +165,7 @@
         .article-source { font-weight: 600; }
         .article-source.BITC { color: #ea580c; }
         .article-source.IFC { color: #2563eb; }
-        /* Market Dashboard */
+        .article-source.SAGEWORKS { color: #0891b2; }
         .market-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -194,25 +186,11 @@
             margin-bottom: 12px;
             font-weight: 600;
         }
-        .metric-value {
-            font-size: 36px;
-            font-weight: 800;
-            color: var(--dark);
-            margin-bottom: 8px;
-        }https://sjladuwbjctoxeuxcfmg.supabase.co/rest/v1/
-        .metric-change {
-            font-size: 13px;
-            font-weight: 600;
-        }
+        .metric-value { font-size: 36px; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
+        .metric-change { font-size: 13px; font-weight: 600; }
         .metric-change.positive { color: var(--success); }
         .metric-change.negative { color: var(--danger); }
-        /* SME Dashboard */
-        .sme-grid {sb_secret_maUpictHHIsCVOWeYdN3Nw_AetM3pg7
-                  sb_publishable_cKuhqZSEfr3_bGM93vYPjw_umnHvebg 
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 16px;
-        }
+        .sme-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
         .sme-card {
             background: var(--white);
             border: 1px solid var(--border);
@@ -221,20 +199,12 @@
             border-left: 3px solid var(--primary);
         }
         .sme-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
-        .sme-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
+        .sme-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .sme-stat-label { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; }
         .sme-stat-value { font-size: 24px; font-weight: 800; color: var(--dark); }
-        .sme-stat-sub { font-size: 12px; }
-        .sme-stat-sub.positive { color: var(--success); }
-        .sme-stat-sub.negative { color: var(--danger); }
-        /* States */
         .loading-state, .error-state, .empty-state {
             text-align: center;
-            padding: 60px 20px;
+            padding: 40px 20px;
             color: var(--gray);
         }
         .loading-state::before {
@@ -249,19 +219,18 @@
             animation: spin 0.8s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .error-state {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            border-radius: var(--radius);
-            color: #991b1b;
+        .error-state { background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--radius); color: #991b1b; }
+        .empty-state { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: var(--radius); color: #075985; }
+        .db-badge {
+            display: inline-block;
+            font-size: 10px;
+            padding: 2px 10px;
+            border-radius: 12px;
+            margin-left: 8px;
+            font-weight: 600;
         }
-        .empty-state {
-            background: #f0f9ff;
-            border: 1px solid #bae6fd;
-            border-radius: var(--radius);
-            color: #075985;
-        }
-        /* Footer */
+        .db-badge.live { background: #dcfce7; color: #166534; }
+        .db-badge.fallback { background: #fef3c7; color: #92400e; }
         .footer {
             text-align: center;
             padding: 24px;
@@ -272,17 +241,6 @@
             margin-top: auto;
         }
         .footer-disclaimer { font-size: 11px; opacity: 0.7; margin-top: 4px; }
-        .status-dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin-right: 6px;
-        }
-        .status-dot.live { background: var(--success); animation: pulse 2s infinite; }
-        .status-dot.offline { background: var(--danger); }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        /* Responsive */
         @media (max-width: 640px) {
             .nav-inner { flex-direction: column; height: auto; padding: 12px 16px; gap: 8px; }
             .nav-tabs { width: 100%; }
@@ -311,18 +269,15 @@
     </nav>
 
     <main class="main-content">
-        <!-- Feed View -->
         <div id="feed" class="view active">
             <div class="section-header">
-                <h2>Economic Intelligence Feed</h2>
+                <h2>Economic Intelligence Feed <span id="dbBadge" class="db-badge fallback">OFFLINE MODE</span></h2>
                 <p class="section-subtitle">Real-time Botswana market insights and analysis</p>
             </div>
             <div id="articlesContainer" class="articles-grid">
                 <div class="loading-state">Loading articles...</div>
             </div>
         </div>
-
-        <!-- Market View -->
         <div id="market" class="view">
             <div class="section-header">
                 <h2>Market Data Dashboard</h2>
@@ -332,8 +287,6 @@
                 <div class="loading-state">Loading market data...</div>
             </div>
         </div>
-
-        <!-- SME View -->
         <div id="sme" class="view">
             <div class="section-header">
                 <h2>SME Tracker</h2>
@@ -346,146 +299,103 @@
     </main>
 
     <footer class="footer">
-        <p><span class="status-dot" id="dbStatus" title="Database status"></span> © 2025 SAGEWORKS AI — Botswana Economic Intelligence Hub</p>
+        <p>© 2025 SAGEWORKS AI — Botswana Economic Intelligence Hub</p>
         <p class="footer-disclaimer">Data sourced from BITC, IFC, BSE, Statistics Botswana, and verified market sources</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
     // ═══════════════════════════════════════════════════
-    // PULA MARKET — SUPABASE CONFIGURATION
+    // CONFIGURATION — REPLACE WITH YOUR NEW ANON KEY
     // ═══════════════════════════════════════════════════
     const SUPABASE_URL = 'https://sjladuwbjctoxeuxcfmg.supabase.co';
-    // PASTE YOUR NEW ANON KEY BELOW (between the quotes):
     const SUPABASE_KEY = 'PASTE_YOUR_NEW_ANON_KEY_HERE';
 
-    let supabase = null;
-    let usingFallback = false;
-
-    try {
-        if (SUPABASE_KEY !== 'PASTE_YOUR_NEW_ANON_KEY_HERE') {
-            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
-                auth: { persistSession: false }
-            });
-            console.log('✅ Supabase client initialized');
-        } else {
-            console.warn('⚠️ Supabase key not configured — using fallback data');
-            usingFallback = true;
-        }
-    } catch (e) {
-        console.error('❌ Supabase init failed:', e.message);
-        usingFallback = true;
-    }
-
     // ═══════════════════════════════════════════════════
-    // FALLBACK DATA
+    // FALLBACK DATA — GUARANTEED TO DISPLAY
     // ═══════════════════════════════════════════════════
     const FALLBACK_ARTICLES = [
         {
-            id: '1', title: 'BITC 2024: Botswana attracted over P4.2 billion in investment with ICT and tourism leading sector growth',
-            excerpt: 'The Botswana Investment and Trade Centre\'s 2024 Annual Report reveals a marked shift in the country\'s investment profile. ICT, Financial Services, and Tourism are the fastest-growing attraction categories.',
-            tag: 'investment', source_name: 'BITC', source_date: '2024-12-31'
+            id: 'fb1',
+            title: 'BITC 2024: Botswana attracted over P4.2 billion in investment with ICT and tourism leading sector growth',
+            excerpt: 'The Botswana Investment and Trade Centre\'s 2024 Annual Report reveals a marked shift in the country\'s investment profile. ICT, Financial Services, and Tourism are the fastest-growing attraction categories. BITC\'s BOSSC processed record volumes of investor inquiries.',
+            tag: 'investment',
+            source_name: 'BITC',
+            source_date: '2024-12-31',
+            created_at: '2024-12-31T00:00:00Z'
         },
         {
-            id: '2', title: 'IFC Diagnostic: Botswana\'s diamond dependency remains its greatest structural risk',
+            id: 'fb2',
+            title: 'IFC Diagnostic: Botswana\'s diamond dependency remains its greatest structural risk',
             excerpt: 'The IFC Country Private Sector Diagnostic flags that minerals contribute ~30% of government revenue. The 8.5% GDP contraction in 2020 illustrates the urgency to diversify beyond diamonds.',
-            tag: 'government', source_name: 'IFC', source_date: '2022-06-01'
+            tag: 'government',
+            source_name: 'IFC',
+            source_date: '2022-06-01',
+            created_at: '2022-06-01T00:00:00Z'
         },
         {
-            id: '3', title: 'Private sector opportunity in Botswana\'s energy transition remains largely untapped',
+            id: 'fb3',
+            title: 'Private sector opportunity in Botswana\'s energy transition remains largely untapped',
             excerpt: 'SOE dominance in the energy sector has constrained private investment, but regulatory reforms are creating entry points for independent power producers. Solar potential remains largely unexplored.',
-            tag: 'trade', source_name: 'IFC', source_date: '2022-06-01'
+            tag: 'trade',
+            source_name: 'IFC',
+            source_date: '2022-06-01',
+            created_at: '2022-06-01T00:00:00Z'
         },
         {
-            id: '4', title: 'Okavango Delta positions Botswana as Africa\'s premium conservation tourism market',
+            id: 'fb4',
+            title: 'Okavango Delta positions Botswana as Africa\'s premium conservation tourism market',
             excerpt: 'Botswana\'s high-value low-volume tourism model continues to attract premium international visitors. Community-based tourism and digital booking infrastructure are key investment opportunities.',
-            tag: 'market', source_name: 'IFC', source_date: '2022-06-01'
+            tag: 'market',
+            source_name: 'IFC',
+            source_date: '2022-06-01',
+            created_at: '2022-06-01T00:00:00Z'
+        },
+        {
+            id: 'fb5',
+            title: 'SME Field Data: ICE AGE Investment and Kebab Operation tracked in Maun, Ngami District',
+            excerpt: 'First publicly tracked informal economy SME data from Maun. Dual operation: ice distribution (6-10 bags/day at P10/bag, ~88% margin) and street food kebabs (24 units/day at P10/unit, ~P145 daily profit). Combined monthly revenue estimate: P9,000-P10,200.',
+            tag: 'sme',
+            source_name: 'SAGEWORKS AI Field Data',
+            source_date: '2026-05-05',
+            created_at: '2026-05-05T00:00:00Z'
         }
     ];
 
     const FALLBACK_MARKET = [
-        { ticker: 'BWP/USD', company_name: 'Botswana Pula', price: 0.0734, change_pct: 0.45, data_date: new Date().toISOString().split('T')[0] },
-        { ticker: 'INFLATION', company_name: 'Inflation Rate', price: 3.8, change_pct: -0.2, data_date: new Date().toISOString().split('T')[0] },
-        { ticker: 'GDP', company_name: 'GDP Growth Rate', price: 4.2, change_pct: 0.8, data_date: new Date().toISOString().split('T')[0] },
-        { ticker: 'CONFIDENCE', company_name: 'Business Confidence Index', price: 72.5, change_pct: 2.1, data_date: new Date().toISOString().split('T')[0] }
+        { ticker: 'BWP/USD', company_name: 'Botswana Pula', price: 0.0734, change_pct: 0.45 },
+        { ticker: 'INFLATION', company_name: 'Inflation Rate', price: 3.8, change_pct: -0.2 },
+        { ticker: 'GDP', company_name: 'GDP Growth Rate', price: 4.2, change_pct: 0.8 },
+        { ticker: 'CONFIDENCE', company_name: 'Business Confidence', price: 72.5, change_pct: 2.1 }
     ];
 
     const FALLBACK_SME = [
-        { id: '1', log_date: '2026-05-05', business_name: 'ICE AGE Investment', units_sold: 7, unit_price: 10.00, revenue: 70.00, profit: 61.60, notes: 'Chest freezer at 50% capacity' },
-        { id: '2', log_date: '2026-05-05', business_name: 'Kebab Operation', units_sold: 24, unit_price: 10.00, revenue: 240.00, profit: 145.00, notes: 'Full sell-through. 12 morning + 12 evening.' }
+        {
+            id: 'sme1',
+            business_name: 'ICE AGE Investment',
+            log_date: '2026-05-05',
+            units_sold: 7,
+            unit_price: 10.00,
+            revenue: 70.00,
+            cogs: 8.40,
+            profit: 61.60,
+            notes: 'Chest freezer at 50% capacity. Normal day.'
+        },
+        {
+            id: 'sme2',
+            business_name: 'Kebab Operation',
+            log_date: '2026-05-05',
+            units_sold: 24,
+            unit_price: 10.00,
+            revenue: 240.00,
+            cogs: 95.00,
+            profit: 145.00,
+            notes: '12 morning + 12 evening. Full sell-through.'
+        }
     ];
 
     // ═══════════════════════════════════════════════════
-    // DATA FETCHING
-    // ═══════════════════════════════════════════════════
-    async function fetchArticles() {
-        if (!supabase) return FALLBACK_ARTICLES;
-        try {
-            const { data, error } = await supabase
-                .from('articles')
-                .select('*')
-                .eq('published', true)
-                .order('created_at', { ascending: false })
-                .limit(10);
-            if (error) throw error;
-            if (!data || data.length === 0) return FALLBACK_ARTICLES;
-            console.log(`✅ Supabase connected. Articles: ${data.length}`);
-            updateDbStatus(true);
-            return data;
-        } catch (e) {
-            console.error('❌ Articles fetch failed:', e.message);
-            updateDbStatus(false);
-            return FALLBACK_ARTICLES;
-        }
-    }
-
-    async function fetchMarketData() {
-        if (!supabase) return FALLBACK_MARKET;
-        try {
-            const { data, error } = await supabase
-                .from('market_data')
-                .select('*')
-                .order('ticker', { ascending: true });
-            if (error) throw error;
-            if (!data || data.length === 0) return FALLBACK_MARKET;
-            updateDbStatus(true);
-            return data;
-        } catch (e) {
-            console.error('❌ Market fetch failed:', e.message);
-            updateDbStatus(false);
-            return FALLBACK_MARKET;
-        }
-    }
-
-    async function fetchSMEData() {
-        if (!supabase) return FALLBACK_SME;
-        try {
-            const { data, error } = await supabase
-                .from('sme_daily_log')
-                .select('*')
-                .order('log_date', { ascending: false })
-                .limit(10);
-            if (error) throw error;
-            if (!data || data.length === 0) return FALLBACK_SME;
-            updateDbStatus(true);
-            return data;
-        } catch (e) {
-            console.error('❌ SME fetch failed:', e.message);
-            updateDbStatus(false);
-            return FALLBACK_SME;
-        }
-    }
-
-    function updateDbStatus(connected) {
-        const dot = document.getElementById('dbStatus');
-        if (dot) {
-            dot.className = 'status-dot ' + (connected ? 'live' : 'offline');
-            dot.title = connected ? 'Supabase connected' : 'Using fallback data (offline)';
-        }
-    }
-
-    // ═══════════════════════════════════════════════════
-    // RENDER FUNCTIONS
+    // HELPER FUNCTIONS
     // ═══════════════════════════════════════════════════
     function escapeHtml(text) {
         if (!text) return '';
@@ -495,35 +405,53 @@
 
     function formatDate(dateStr) {
         if (!dateStr) return '';
-        const d = new Date(dateStr);
-        return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        try {
+            const d = new Date(dateStr);
+            if (isNaN(d.getTime())) return dateStr;
+            return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        } catch(e) {
+            return dateStr;
+        }
     }
 
-    async function renderArticles() {
+    function updateDbBadge(connected) {
+        const badge = document.getElementById('dbBadge');
+        if (!badge) return;
+        if (connected) {
+            badge.textContent = '● LIVE';
+            badge.className = 'db-badge live';
+        } else {
+            badge.textContent = 'OFFLINE MODE';
+            badge.className = 'db-badge fallback';
+        }
+    }
+
+    // ═══════════════════════════════════════════════════
+    // RENDER FUNCTIONS
+    // ═══════════════════════════════════════════════════
+    function renderArticles(articles) {
         const container = document.getElementById('articlesContainer');
-        const articles = await fetchArticles();
         if (!articles || articles.length === 0) {
-            container.innerHTML = '<div class="empty-state">📭 No articles yet. Check back soon.</div>';
+            container.innerHTML = '<div class="empty-state">📭 No articles available yet. Check back soon for Botswana economic insights.</div>';
             return;
         }
         container.innerHTML = articles.map(a => `
             <article class="article-card">
                 <span class="article-tag ${escapeHtml(a.tag || '')}">${escapeHtml(a.tag || 'General')}</span>
                 <h3 class="article-title">${escapeHtml(a.title)}</h3>
-                <p class="article-excerpt">${escapeHtml(a.excerpt || '')}</p>
+                <p class="article-excerpt">${escapeHtml(a.excerpt || a.summary || '')}</p>
                 <div class="article-meta">
                     <span class="article-source ${escapeHtml(a.source_name || '')}">${escapeHtml(a.source_name || 'Pula Market')}</span>
-                    <time>${formatDate(a.source_date || a.created_at)}</time>
+                    <time>${formatDate(a.source_date || a.created_at || a.published_at)}</time>
                 </div>
             </article>
         `).join('');
     }
 
-    async function renderMarket() {
+    function renderMarket(data) {
         const container = document.getElementById('marketContainer');
-        const data = await fetchMarketData();
         if (!data || data.length === 0) {
-            container.innerHTML = '<div class="empty-state">📊 No market data available.</div>';
+            container.innerHTML = '<div class="empty-state">📊 No market data available yet.</div>';
             return;
         }
         container.innerHTML = data.map(m => {
@@ -543,11 +471,10 @@
         }).join('');
     }
 
-    async function renderSME() {
+    function renderSME(data) {
         const container = document.getElementById('smeContainer');
-        const data = await fetchSMEData();
         if (!data || data.length === 0) {
-            container.innerHTML = '<div class="empty-state">🏪 No SME data yet.</div>';
+            container.innerHTML = '<div class="empty-state">🏪 No SME data recorded yet.</div>';
             return;
         }
         container.innerHTML = data.map(s => `
@@ -577,28 +504,91 @@
     }
 
     // ═══════════════════════════════════════════════════
+    // SUPABASE FETCH (with immediate fallback display)
+    // ═══════════════════════════════════════════════════
+    async function initData() {
+        // STEP 1: Display fallback data IMMEDIATELY
+        renderArticles(FALLBACK_ARTICLES);
+        renderMarket(FALLBACK_MARKET);
+        renderSME(FALLBACK_SME);
+        updateDbBadge(false);
+        console.log('📦 Displaying fallback data while connecting to Supabase...');
+
+        // STEP 2: Check if Supabase is configured
+        if (SUPABASE_KEY === 'PASTE_YOUR_NEW_ANON_KEY_HERE') {
+            console.warn('⚠️ Supabase key not configured. Running in offline mode.');
+            return;
+        }
+
+        // STEP 3: Try Supabase connection
+        try {
+            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+                auth: { persistSession: false }
+            });
+
+            // Try fetching articles
+            const { data: articles, error: articlesError } = await supabase
+                .from('articles')
+                .select('*')
+                .eq('published', true)
+                .order('created_at', { ascending: false })
+                .limit(10);
+
+            if (!articlesError && articles && articles.length > 0) {
+                console.log(`✅ Supabase connected. Articles: ${articles.length}`);
+                renderArticles(articles);
+                updateDbBadge(true);
+            } else if (articlesError) {
+                console.warn('⚠️ Supabase query failed:', articlesError.message);
+                console.log('📦 Using fallback data.');
+            } else {
+                console.log('📦 Supabase connected but no articles in database. Using fallback data.');
+            }
+
+            // Try fetching market data
+            const { data: marketData, error: marketError } = await supabase
+                .from('market_data')
+                .select('*')
+                .order('ticker', { ascending: true });
+
+            if (!marketError && marketData && marketData.length > 0) {
+                renderMarket(marketData);
+            }
+
+            // Try fetching SME data
+            const { data: smeData, error: smeError } = await supabase
+                .from('sme_daily_log')
+                .select('*')
+                .order('log_date', { ascending: false })
+                .limit(10);
+
+            if (!smeError && smeData && smeData.length > 0) {
+                renderSME(smeData);
+            }
+
+        } catch (e) {
+            console.warn('⚠️ Supabase connection failed:', e.message);
+            console.log('📦 Running in offline mode with fallback data.');
+        }
+    }
+
+    // ═══════════════════════════════════════════════════
     // TAB NAVIGATION
     // ═══════════════════════════════════════════════════
     document.getElementById('navTabs').addEventListener('click', function(e) {
         const tab = e.target.closest('.nav-tab');
         if (!tab) return;
         const viewId = tab.dataset.view;
-        // Update tabs
         document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-        // Update views
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.getElementById(viewId).classList.add('active');
     });
 
     // ═══════════════════════════════════════════════════
-    // INITIALIZATION
+    // STARTUP
     // ═══════════════════════════════════════════════════
-    document.addEventListener('DOMContentLoaded', function() {
-        renderArticles();
-        renderMarket();
-        renderSME();
-    });
+    document.addEventListener('DOMContentLoaded', initData);
     </script>
 </body>
 </html>
