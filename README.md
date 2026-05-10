@@ -1,17 +1,31 @@
-# Pula Market — Botswana Economic Intelligence Hub
+# 🇧🇼 Pula Market — Botswana Economic Intelligence Hub
 
 **SAGEWORKS AI** — Real-time Botswana economic data, market intelligence, and SME tracking.
 
-## 🚀 Quick Start
+## 🚀 Live Site
 
-### Live Site
-Visit: `https://peacebinflow.github.io/pula-market`
+**[https://peacebinflow.github.io/pula-market](https://peacebinflow.github.io/pula-market)**
 
-### Local Development
-```bash
-# Clone the repository
-git clone https://github.com/PeacebinfLow/pula-market.git
-cd pula-market
+## 📊 Features
 
-# Open in browser (no build step required)
-open index.html
+- **Economic Intelligence Feed** — Curated articles from BITC, IFC, and Botswana sources
+- **Market Data Dashboard** — BWP/USD, inflation, GDP growth, business confidence
+- **SME Tracker** — Live small business daily logs from field data
+- **Supabase Backend** — Real-time PostgreSQL database
+- **Offline Fallback** — Works when database is unreachable
+
+## 🗄️ Database (Supabase)
+
+### Tables
+| Table | Description |
+|-------|-------------|
+| `articles` | Economic intelligence articles |
+| `market_data` | BSE market metrics |
+| `sme_daily_log` | Daily SME operations logs |
+| `data_sources` | Source registry |
+| `companies` | Company directory |
+
+### Schema
+See `supabase-schema.sql` for the complete database setup.
+
+## 📁 Project Structure
